@@ -1,12 +1,19 @@
 name: Model Egitim Robotu (CT)
-
-# Robot ne zaman çalışsın?
 on:
-  workflow_dispatch:  # Manuel butonla tetikleme
+  # 1. Manuel Buton (Yine kalsın)
+  workflow_dispatch:
+
+  # 2. ESKİ YÖNTEM: Push (Bunu tutabilirsin, sen elle yükleyince çalışır)
   push:
     paths:
-      - 'train.py'    # Eğitim kodu değişirse
-      - 'requirements.txt'
+      - 'train.py'
+      - 'data.csv'
+
+  # 3. YENİ YÖNTEM: Diğer Robot İşini Bitirince Çalış (Zincirleme)
+  workflow_run:
+    workflows: ["Gunluk Veri Ureticisi (Cron Job)"] # Buraya daily_schedule.yml içindeki "name:" neyse onu tam yazmalısın!
+    types:
+      - completed
 
 jobs:
   train-and-save:
