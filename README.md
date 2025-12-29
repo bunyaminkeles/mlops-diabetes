@@ -16,7 +16,7 @@ Bu proje, uçtan uca (End-to-End) bir Makine Öğrenmesi dağıtım örneğidir.
 
 ## 🌍 Canlı Test
 API şu adreste çalışmaktadır:
-`https://diabetes-api-seninadin.onrender.com/docs`
+`https://diabetes-api-bunyaminkeles.onrender.com/docs`
 
 ## 💻 Lokal Kurulum
 ```bash
