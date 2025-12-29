@@ -51,3 +51,9 @@ jobs:
         git commit -m "🤖 Robot: Yeni model eğitildi ve güncellendi" || echo "Model değişmedi, commit atılmadı."
         
         git push
+
+    # 6. Render'ı Tetikle (Zile Basma İşlemi)
+    - name: Render Deploy Tetikle
+      # Sadece commit atıldıysa çalışsın (Hata varsa boşuna deploy etmesin)
+      if: success() 
+      run: curl "${{ secrets.RENDER_DEPLOY_HOOK }}"  
