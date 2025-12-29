@@ -1,0 +1,34 @@
+name: Model Guvenlik Kontrolu (CI)
+
+# Bu robot ne zaman çalışsın?
+# Her 'main' dalına kod yüklendiğinde (push)
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    # Robotun kullanacağı bilgisayar (Sanal Makine)
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Adım: Kodları GitHub deposundan çek
+    - name: Kodlari Cek (Checkout)
+      uses: actions/checkout@v3
+
+    # 2. Adım: Python Kur
+    - name: Python 3.9 Kurulumu
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+
+    # 3. Adım: Kütüphaneleri Yükle
+    - name: Kutuphaneleri Yukle
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest  # Test aracı
+
+    # 4. Adım: Testi Çalıştır
+    - name: Model Testini Calistir
+      run: python test_model.py
