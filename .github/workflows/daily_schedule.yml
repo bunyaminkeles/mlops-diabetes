@@ -1,0 +1,38 @@
+name: Gunluk Veri Ureticisi (Cron Job)
+
+on:
+  # 1. ZAMANLANMIŞ GÖREV
+  schedule:
+    # Her gün sabah 08:00 UTC'de çalış (Türkiye saatiyle 11:00 gibi)
+    - cron: '0 8 * * *'
+  
+  # 2. MANUEL BUTON (Test etmek için şimdi basabilirsin)
+  workflow_dispatch:
+
+jobs:
+  generate-data:
+    runs-on: ubuntu-latest
+    
+    # Yazma izni şart!
+    permissions:
+      contents: write
+
+    steps:
+    - name: Kodlari Cek
+      uses: actions/checkout@v3
+
+    - name: Python Kur
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+
+    - name: Sahte Veri Uret
+      run: python fake_data.py
+
+    - name: Veriyi Kaydet ve Pushla
+      run: |
+        git config --global user.name "Veri Uretim Robotu"
+        git config --global user.email "bot@data.com"
+        git add data.csv
+        git commit -m "📊 Günlük veri eklendi (Otomatik)"
+        git push
