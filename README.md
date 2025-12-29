@@ -14,10 +14,6 @@ Bu proje, uçtan uca (End-to-End) bir Makine Öğrenmesi dağıtım örneğidir.
 2. `main.py` API isteklerini karşılar.
 3. Her `git push` işleminde GitHub Actions otomatik testleri çalıştırır.
 
-## 🌍 Canlı Test
-API şu adreste çalışmaktadır:
-`https://diabetes-api-bunyaminkeles.onrender.com/docs`
-
 ## 💻 Lokal Kurulum
 ```bash
 pip install -r requirements.txt
