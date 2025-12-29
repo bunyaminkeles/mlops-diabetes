@@ -1,0 +1,53 @@
+name: Model Egitim Robotu (CT)
+
+# Robot ne zaman çalışsın?
+on:
+  workflow_dispatch:  # Manuel butonla tetikleme
+  push:
+    paths:
+      - 'train.py'    # Eğitim kodu değişirse
+      - 'requirements.txt'
+
+jobs:
+  train-and-save:
+    runs-on: ubuntu-latest
+    
+    # Robota yazma izni veriyoruz
+    permissions:
+      contents: write
+
+    steps:
+    # 1. Kodları Çek
+    - name: Kodlari Getir
+      uses: actions/checkout@v3
+
+    # 2. Python Kur
+    - name: Python Kurulumu
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+
+    # 3. Kütüphaneleri Yükle
+    - name: Gereklilikleri Yukle
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # 4. MODELİ EĞİT (Burası Show Kısmı)
+    - name: Modeli Egit
+      run: python train.py
+      # Bu komut çalıştığında 'diabetes_model.pkl' dosyası yenilenir.
+
+    # 5. Yeni Modeli Kaydet ve GitHub'a Gönder
+    - name: Yeni Modeli Commit ve Push Yap
+      run: |
+        git config --global user.name "GitHub Action Robotu"
+        git config --global user.email "robot@github.com"
+        
+        # Değişiklik var mı kontrol et
+        git add diabetes_model.pkl
+        
+        # Eğer model değişmediyse hata verme, devam et
+        git commit -m "🤖 Robot: Yeni model eğitildi ve güncellendi" || echo "Model değişmedi, commit atılmadı."
+        
+        git push
