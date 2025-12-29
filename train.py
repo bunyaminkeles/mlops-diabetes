@@ -9,6 +9,8 @@ print("1. Veri Seti Yükleniyor...")
 url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
 column_names = ['preg', 'glucose', 'bp', 'skin', 'insulin', 'bmi', 'pedigree', 'age', 'label']
 df = pd.read_csv(url, names=column_names)
+df.to_csv("diabetes.csv", index=False)
+print("   Veri seti 'diabetes.csv' olarak kaydedildi.")
 
 print(f"   Veri boyutu: {df.shape}")
 
